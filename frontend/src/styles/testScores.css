@@ -1,0 +1,373 @@
+/* Test Scores (grouped by category) */
+
+.testScores-container {
+  min-height: 100vh;
+  padding: 26px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  /* Match global dark theme instead of transparent/white */
+  background: #0a0e1a;
+}
+
+/* Ensure text always stays readable (avoid inherited white backgrounds */
+.testScores-container,
+.testScores-container * {
+  color: #e2e8f0;
+}
+
+.testScores-headerRow {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.testScores-back-btn {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.testScores-back-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.testScores-header {
+  flex: 1;
+  min-width: 260px;
+  width: 100%;
+  max-width: none;
+  padding: 16px 22px;
+
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #e2e8f0;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.testScores-language-switch {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.testScores-language-switch select {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  color: #e2e8f0;
+  padding: 6px 8px;
+  outline: none;
+}
+
+.testScores-language-switch select:focus {
+  border-color: rgba(96, 165, 250, 0.9);
+}
+
+.testScores-error {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 12px 14px;
+  border-radius: 14px;
+  max-width: 980px;
+  width: 100%;
+}
+
+.testScores-empty {
+  color: #94a3b8;
+  padding: 18px;
+  text-align: center;
+}
+
+.testScores-reportCard {
+  width: 100%;
+  max-width: 980px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px;
+}
+
+.testScores-reportTitle {
+  font-weight: 900;
+  font-size: 16px;
+  color: #e2e8f0;
+  margin-bottom: 6px;
+}
+
+.testScores-reportMeta {
+  color: #94a3b8;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.testScores-reportGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+  margin-bottom: 10px;
+}
+
+.testScores-reportGrid span {
+  color: #94a3b8;
+}
+
+.testScores-reportSummary {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+}
+
+.testScores-reportSummary p {
+  margin: 4px 0;
+}
+
+.testScores-reportSummaryTitle {
+  color: #e2e8f0;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.testScores-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testScores-loading-card {
+  padding: 18px 22px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.testScores-categoryGrid {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+.testScores-categoryCard {
+  position: relative;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.testScores-categoryCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed, #06b6d4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.testScores-categoryCard:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.testScores-categoryCard:hover::before {
+  opacity: 1;
+}
+
+.testScores-categoryTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+
+.testScores-categoryTitle {
+  color: #e2e8f0;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.testScores-categoryMeta {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.testScores-chartWrap {
+  margin: 0 0 14px;
+  padding: 10px 10px 6px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.testScores-chartTitle {
+  margin-bottom: 8px;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.testScores-chartWrap canvas {
+  width: 100% !important;
+  height: 220px !important;
+}
+
+.testScores-categorySummary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 520px) {
+  .testScores-reportGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .testScores-language-switch {
+    margin-left: 0;
+  }
+
+  .testScores-categorySummary {
+    grid-template-columns: 1fr;
+  }
+}
+
+.testScores-summaryItem {
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.testScores-summaryLabel {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.testScores-summaryValue {
+  color: #e2e8f0;
+  font-size: 18px;
+  font-weight: 900;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.testScores-summarySub {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.testScores-attemptList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.testScores-attemptRow {
+  border-radius: 16px;
+  padding: 12px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.testScores-attemptTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.testScores-attemptDate {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.testScores-attemptScore {
+  color: #60a5fa;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.testScores-attemptPct {
+  color: #c7d2fe;
+  font-size: 12px;
+  font-weight: 900;
+  margin-left: 8px;
+}
+
+.testScores-attemptMetrics {
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.6;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+}
+
+@media (max-width: 520px) {
+  .testScores-attemptMetrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+.testScores-attemptMetrics b {
+  color: #e2e8f0;
+}
+
+.testScores-attemptExtras {
+  margin-top: 10px;
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.testScores-attemptExtras b {
+  color: #e2e8f0;
+}
+
